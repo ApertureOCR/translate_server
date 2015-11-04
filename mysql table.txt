@@ -1,0 +1,6 @@
+CREATE TABLE test{
+result varchar(20),
+original varchar(20),
+date varchar(20),
+time varchar(20)
+};
