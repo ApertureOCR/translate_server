@@ -36,7 +36,7 @@ def returnTrans():
         imgDBname = hashlib.sha1(str(uuid.uuid4())).hexdigest()
         img.save(os.path.join(app.config['UPLOAD_FOLDER'], imgDBname))
 
-    return translate_ms(string, from_lang, to_lang)
+    return translate_ms(string, from_lang, to_lang, imgName, imgDBname)
 
 if __name__ == '__main__':
     app.run(debug=True)

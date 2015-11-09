@@ -27,12 +27,13 @@ def validateLanguage(lang):
         return True
     return False
 
-def saveData(host, user, passwd, db, result, original, tableName):
+def saveData(host, user, passwd, db, result, original, file_name, file_name_sha1, tableName):
     dBase = MySQLdb.connect(host, user, passwd, db, charset='utf8', use_unicode=True)
     cursor = dBase.cursor()
 
-    string_1 = 'insert into %s(result, original, date, time) ' % (tableName)
-    string_2 = 'values("%s", "%s", "%s", "%s")' % (result, original, getCurrentDate(), getCurrentTime())
+    string_1 = 'insert into %s(result, original, date, time, file_name, file_name_sha1) ' % (tableName)
+    string_2 = 'values("%s", "%s", "%s", "%s", "%s", "%s")' % (result, original, getCurrentDate(), getCurrentTime(),
+    file_name, file_name_sha1)
 
     cursor.execute("use " + db)
     cursor.execute(string_1 + string_2)
@@ -41,13 +42,13 @@ def saveData(host, user, passwd, db, result, original, tableName):
     cursor.close()
     dBase.close()
 
-def translate_ms(mstr, lang_from, lang_to):
+def translate_ms(mstr, lang_from, lang_to, file_name, file_name_sha1):
     result = translator_ms.translate(mstr, lang_from, lang_to)
     result_str = str(result)
     forReturn = {"result":result_str,
                  "original":mstr}
 
-    saveData('localhost', 'root', '0000', 'python_test', result_str, mstr, 'test')
+    saveData('localhost', 'root', '0000', 'python_test', result_str, mstr, file_name, file_name_sha1, 'test')
     
     return json.dumps(forReturn, ensure_ascii=False)
 
