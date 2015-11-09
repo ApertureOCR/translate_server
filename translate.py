@@ -52,4 +52,16 @@ def translate_ms(mstr, lang_from, lang_to, file_name, file_name_sha1):
     
     return json.dumps(forReturn, ensure_ascii=False)
 
-        
+def getList(host = 'localhost', user = 'root', passwd = '0000', db = 'python_test'):
+    dBase = MySQLdb.connect(host, user, passwd, db, charset='utf8', use_unicode=True)
+    cursor = dBase.cursor()
+    
+    query = "SELECT * FROM test"
+    cursor.execute(query)
+
+    _list = cursor.fetchall()
+
+    cursor.close()
+    dBase.close()
+
+    return _list

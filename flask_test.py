@@ -4,6 +4,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 import os
+import io
 import uuid
 import hashlib
 from flask import Flask
@@ -12,8 +13,10 @@ from flask import request
 from flask import session
 from flask import redirect
 from flask import url_for
+from flask import send_file
 from werkzeug import secure_filename
 from translate import translate_ms
+from translate import getList
 
 UPLOAD_FOLDER = './image'
 
@@ -37,6 +40,18 @@ def returnTrans():
         img.save(os.path.join(app.config['UPLOAD_FOLDER'], imgDBname))
 
     return translate_ms(string, from_lang, to_lang, imgName, imgDBname)
+
+@app.route('/show')
+def showData():
+    for data in getList():
+        print data[0]
+        
+    return render_template('template.html', data_list = getList())
+
+@app.route('/image/<filename>')
+def showImg(filename):
+    return send_file(UPLOAD_FOLDER + '/' + filename, mimetype='image')
+    #return render_template('img.html', name = filename)
 
 if __name__ == '__main__':
     app.run(debug=True)
