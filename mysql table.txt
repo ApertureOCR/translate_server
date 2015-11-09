@@ -2,5 +2,7 @@ CREATE TABLE test{
 result varchar(20),
 original varchar(20),
 date varchar(20),
-time varchar(20)
+time varchar(20),
+file_name_sha1 varchar(50),
+file_name varchar(50)
 };
