@@ -4,6 +4,8 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 import os
+import uuid
+import hashlib
 from flask import Flask
 from flask import render_template
 from flask import request
@@ -31,7 +33,8 @@ def returnTrans():
         
         img = request.files['img']
         imgName = secure_filename(img.filename)
-        img.save(os.path.join(app.config['UPLOAD_FOLDER'], imgName))
+        imgDBname = hashlib.sha1(str(uuid.uuid4())).hexdigest()
+        img.save(os.path.join(app.config['UPLOAD_FOLDER'], imgDBname))
 
     return translate_ms(string, from_lang, to_lang)
 
