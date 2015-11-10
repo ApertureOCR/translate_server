@@ -9,7 +9,11 @@
 		
 		<ul>
 			{% for data in data_list %}
-			<li><a href='./image/{{data[5]}}'>{{data[0]}}</a> {{data[2]}} <b>{{data[3]}}</b></li>
+			
+			<li><a href='./img/{{data[5]}}/{{data[1]}}/{{data[0]}}'>
+			{{data[0]}}</a> {{data[2]}} <b>{{data[3]}}</b>
+			</li>
+			
 			{% endfor %}
 		</ul>
 	</body>

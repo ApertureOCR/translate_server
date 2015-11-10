@@ -14,11 +14,12 @@ from flask import session
 from flask import redirect
 from flask import url_for
 from flask import send_file
+from flask import send_from_directory
 from werkzeug import secure_filename
 from translate import translate_ms
 from translate import getList
 
-UPLOAD_FOLDER = './image'
+UPLOAD_FOLDER = './static/image'
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -48,10 +49,9 @@ def showData():
         
     return render_template('template.html', data_list = getList())
 
-@app.route('/image/<filename>')
-def showImg(filename):
-    return send_file(UPLOAD_FOLDER + '/' + filename, mimetype='image')
-    #return render_template('img.html', name = filename)
+@app.route('/img/<filename>/<original>/<result>')
+def showImg(filename, original, result):
+    return render_template('img.html', name = filename, original = original, result = result)
 
 if __name__ == '__main__':
     app.run(debug=True)
